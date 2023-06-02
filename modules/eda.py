@@ -19,37 +19,6 @@ def folders(dataset):
     folders= os.listdir(path)
     return folders
 
-def avg_images(dataset, sub_folder):
-  '''
-  This function takes two arguments the dataset: training or testing, and the sub_folder for the type of tumor e.g. ['glioma', 'meningioma', 'notumor', 'pituitary']
-  This function is used to find the average pixel values of each class
-  The purpose is to find if there is a difference in each class
-  '''
-  #assign the path in the function for readability and understanding
-  #assign the sub folder (class name) that was passed to the function
-  path = (f'../Images/{dataset}')
-  class_name = sub_folder
-  batch_size = 32  # Modify this to suit your needs
-  #instantiate ImageDataGenerator
-  datagen = ImageDataGenerator(rescale=1./255)  # normalize pixel values to [0,1]
-  #get the images from the directory
-  generator = datagen.flow_from_directory(path,
-                                          classes=[class_name],
-                                          class_mode=None,
-                                          color_mode='grayscale',
-                                          target_size=(256, 256),
-                                          batch_size=batch_size)
-  n_samples = generator.samples
-  average_image = np.zeros((256, 256, 1))
-
-  for i in range(n_samples // batch_size):  # Integer division to avoid partial batches
-      images = next(generator)
-      average_image += np.sum(images, axis=0)
-
-  average_image /= n_samples
-  return average_image
-
-
 def image_len(dataset, folders):
     '''
     This code takes in the list directory of the folder containing the classification folders. And the dataset.
@@ -75,3 +44,46 @@ def image_len(dataset, folders):
         plt.imshow(image)
         plt.axis('off')
         plt.show()
+class Image:
+    def __init__(self, dataset, sub_folder):
+        #learned i didnt need a comma because that creates a tuple: https://stackoverflow.com/questions/39192261/class-init-takes-parameters-but-turns-them-into-tuples-for-some-reason
+        self.dataset = dataset
+        self.sub_folder = sub_folder
+    
+    def avg_images(self):
+      '''
+      This function takes two arguments the dataset: training or testing, and the sub_folder for the type of tumor e.g. ['glioma', 'meningioma', 'notumor', 'pituitary']
+      This function is used to find the average pixel values of each class
+      The purpose is to find if there is a difference in each class
+      '''
+      #assign the path in the function for readability and understanding
+      #assign the sub folder (class name) that was passed to the function
+      path = (f'../Images/{self.dataset}')
+      class_name = self.sub_folder
+      batch_size = 32  # Modify this to suit your needs
+      #instantiate ImageDataGenerator
+      datagen = ImageDataGenerator(rescale=1./255)  # normalize pixel values to [0,1]
+      #get the images from the directory
+      generator = datagen.flow_from_directory(path,
+                                              classes=[class_name],
+                                              class_mode=None,
+                                              color_mode='grayscale',
+                                              target_size=(256, 256),
+                                              batch_size=batch_size)
+      n_samples = generator.samples
+      average_image = np.zeros((256, 256, 1))
+
+      for i in range(n_samples // batch_size):  # Integer division to avoid partial batches
+          images = next(generator)
+          average_image += np.sum(images, axis=0)
+
+      average_image /= n_samples
+      return average_image
+    
+def image_contrast(comparision, base_image):
+    # we need to rescale the contrasts
+    image = base_image - comparision
+    image -= image.min() # subtract minimum 
+    image /= image.max() # divide by new max
+
+    return image
