@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import pandas as pd
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -49,6 +49,13 @@ The Code was originally developed by chat GPT 3 with the prompt: "I want to find
 was later prompted to adjust the code to be able to pass a parameter to the classify_images function. Took a total of 8 prompts and manual adjustments.
 '''
 def find_closest_class(mean_pixel_value, class_averages):
+    '''
+    This function finds which class an image is closest to
+    =============================================================================    
+    Keyword arguments:
+    mean_pixel_value -- The mean pixel value of an image
+    class_averages -- The main folder either Train and Test folder (default = Training)
+    '''
     #initialize the cloest class variable
     closest_class = None
     #initialize the cloest class variable
@@ -71,7 +78,14 @@ The Code was originally developed by chat GPT 3 with the prompt: "How do I dynam
 was later prompted to adjust the code to be able to pass a parameter to the find_closest_class function. Took a total of 8 prompts and manual adjustments.
 '''
 def classify_images(test_folder_path, class_paths):
-    #create a list for the actual images
+    '''
+    This function finds predicts which class belongs to based on which avg pixel value its closest to
+    =============================================================================    
+    Keyword arguments:
+    test_folder_path -- The file path to the test folder
+    class_paths -- The file path to the class
+    '''
+    #create a list for the actual classes of an images
     actual_classes = []
     #create a list for the predictions
     predicted_classes = []
@@ -94,7 +108,7 @@ def classify_images(test_folder_path, class_paths):
             image_path = os.path.join(class_folder_path, image_file)
             #reads the image path using Open CV
             test_image = cv2.imread(image_path)
-            #gets the mean pixcel value of the image
+            #gets the mean pixel value of the image
             mean_pixel_value = np.mean(test_image, axis=(0, 1))
             #uses the find_cloest_class function to find what class its closest to
             closest_class = find_closest_class(mean_pixel_value, class_averages)
@@ -116,16 +130,26 @@ Prompted ChatGPT 3 with incorporating the code as a function that uses the class
 '''
 
 def calculate_metrics(actual_classes, predicted_classes, class_paths):
+    '''
+    This function calculates the precisision, recall, and F1 scores in the for of a data frame.
+    This funcsion also creats a confusion matrix.
+    =============================================================================    
+    Keyword arguments:
+    actual_classes -- The actual class an image belongs to
+    predicted_classes -- The predicted class an image belongs to
+    class_paths -- The file path to the class
+    '''
     #creates the confusion matrix
     cm = confusion_matrix(actual_classes, predicted_classes,
     # gets the label of each class
     labels=list(class_paths.keys()))
     #Finds the weighted scores for each metric
+    accuracy = accuracy_score(actual_classes, predicted_classes)
     precision = precision_score(actual_classes, predicted_classes, average='weighted')
     recall = recall_score(actual_classes, predicted_classes, average='weighted')
     f1 = f1_score(actual_classes, predicted_classes, average='weighted')
     #adds the scores into a data frame
-    data = {'Precision': [precision], 'Recall': [recall], 'F1 Score': [f1]}
+    data = {'Accuracy': [accuracy],'Precision': [precision], 'Recall': [recall], 'F1 Score': [f1]}
     metrics_df = pd.DataFrame(data, index=['baseline'])
 
     return cm, metrics_df
@@ -137,6 +161,15 @@ which prompted ChatGPT 4 to help grab the labels information from the validation
 There were slight modifications to fit the purposes of this code such as assigning class paths and a title parameter.
 '''
 def plot_confusion_matrix(confusion_matrix, class_paths, title):
+    '''
+    This function displays the actual confusion matrix and plots it
+    =============================================================================    
+    Keyword arguments:
+    confusion_matrix -- The confusion matrix generated from the calculate_metrics function
+    class_paths -- The file path to the class
+    title -- The title of the confusion matrix as well as the title of the saved image
+    The tile will be a prefix to {title} confusion matrix
+    '''
     #sets the figure size
     plt.figure(figsize=(10,10))
     #Plots the confusion matrix and assigns the class names on the axis ticks
