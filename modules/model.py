@@ -46,7 +46,7 @@ def avg_images(class_name, dataset='Training'):
 '''
 The Code was originally developed by chat GPT 3 with the prompt: "I want to find the average pixel value of each class and then use the mean of an image to find which class it belongs to. The path to the class looks like '../Images/Training/glioma/' the classes are 'glioma', 'meningioma', 'notumor', 'pituitary'"
 
-was later prompted to adjust the code to be able to pass a parameter to the classify_images function. Took a total of 8 prompts and manual adjustments.
+was later prompted to adjust the code to be able to pass a parameter to the classify_images function. Took a total of 8 prompts and  3 manual adjustments.
 '''
 def find_closest_class(mean_pixel_value, class_averages):
     '''
@@ -75,7 +75,7 @@ def find_closest_class(mean_pixel_value, class_averages):
 '''
 The Code was originally developed by chat GPT 3 with the prompt: "How do I dynamically classify images using the folder they are in as a class. Please use the OS module"
 
-was later prompted to adjust the code to be able to pass a parameter to the find_closest_class function. Took a total of 8 prompts and manual adjustments.
+was later prompted to adjust the code to be able to pass a parameter to the find_closest_class function.
 '''
 def classify_images(test_folder_path, class_paths):
     '''
@@ -185,7 +185,16 @@ def plot_confusion_matrix(confusion_matrix, class_paths, title):
     #displays the image
     plt.show()
 
-    
+'''
+
+Creating a the data frame borrowed ideas from a one day hack-a-thon
+https://github.com/DerikVo/NN_hackathon
+
+Converting a dictionary was taken from: https://stackoverflow.com/questions/18837262/convert-python-dict-into-a-dataframe
+
+originally tried using functions that's only found in pandas 2.0
+
+'''
     
 def model_metrics(true_classes, predicted_classes, title):
     '''
