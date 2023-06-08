@@ -6,7 +6,7 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
 '''
 This portion uses code from a previous project from this [notebook](https://github.com/DerikVo/DSI_project_4_plant_disease/blob/main/notebooks/01_Potato_PlantVillageEDA.ipynb).
@@ -184,3 +184,18 @@ def plot_confusion_matrix(confusion_matrix, class_paths, title):
     plt.savefig(f'../Created_images/{title} confusion matrix.png')
     #displays the image
     plt.show()
+
+    
+    
+def model_metrics(true_classes, predicted_classes, title):
+    '''
+    Calculate accuracy, precision, recall, and F1 score.
+    Also passes a title argument that titles the index for the model being used
+    '''
+    accuracy = accuracy_score(true_classes, predicted_classes)
+    precision = precision_score(true_classes, predicted_classes, average='weighted')
+    recall = recall_score(true_classes, predicted_classes, average='weighted')
+    f1 = f1_score(true_classes, predicted_classes, average='weighted')
+    data = {'Accuracy': [accuracy], 'Precision': [precision], 'Recall': [recall], 'F1 Score': [f1]}
+    df = pd.DataFrame(data, index=[f'{title}'])
+    return df
