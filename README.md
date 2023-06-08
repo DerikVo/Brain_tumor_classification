@@ -29,6 +29,18 @@ For the purposes of this model, we want to limit our false negatives. We want to
 
 ## EDA
 
+For our [EDA process](../Notebooks/01_EDA.ipynb) we examined our two datasets which contained the classes 'glioma', 'meningioma', 'notumor', 'pituitary' which were separated into their own folders. The file count of the images were as follows:
+
+|Class|Training count| Testing count|
+|------|------|------|
+|No Tumor|1,595|405|
+|Meningioma Tumor|1,339|306|
+|Glioma Tumor|1,321|300|
+|Pituitary Tumor|1,457|300|
+
+
+For our EDA process we took the average pixel value of each class.
+Overall, the classes are balanced between the classes 'glioma', 'meningioma', 'notumor', and 'pituitary' in both our training and testing datasets. Additionally when looking at the average pixel value and the contrast between those average we saw some distinct features within those classes. This indicates that there are features that our model can learn to distinguish images into classes. One interesting observation we made was brain with no tumors generally had the most details. When reflecting on our research, [Morgan (2022)](https://www.cancer.gov/rare-brain-spine-tumor/blog/2022/neuroradiology) suggested the first MRI scan is used as a baseline to determine what areas of the brain to scan. This suggest a brain with no tumor will generally have the same angle across patients which was shown in our analysis.
 
 ## Modeling
 
