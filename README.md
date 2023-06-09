@@ -42,14 +42,28 @@ For our [EDA process](./Notebooks/01_EDA.ipynb) we examined our two datasets whi
 For our EDA process we took the average pixel value of each class.
 Overall, the classes are balanced between the classes 'glioma', 'meningioma', 'notumor', and 'pituitary' in both our training and testing datasets. Additionally when looking at the average pixel value and the contrast between those average we saw some distinct features within those classes. This indicates that there are features that our model can learn to distinguish images into classes. One interesting observation we made was brain with no tumors generally had the most details. When reflecting on our research, [Morgan (2022)](https://www.cancer.gov/rare-brain-spine-tumor/blog/2022/neuroradiology) suggested the first MRI scan is used as a baseline to determine what areas of the brain to scan. This suggest a brain with no tumor will generally have the same angle across patients which was shown in our analysis.
 
-## Modeling
+## Modeling and Evaluations
 
+For our [modeling stage](./Notebooks/03_Neural_network.ipynb) we built an initial baseline model that takes the average pixel values of a class. This method was used as a baseline to compare our model and achieved an accuracy of 46%. Following our baseline model we built 2 convolutional neural network, one as a simple baseline and another with regularization; however, the regularization had a poorer performance compared to out model without regularization. A 3rd convolutional neural network using augmentation was attempted, but there were issues with running out of memory so that idea was scrapped.
+
+Our models were evaluated using a custom module to extract the accuracy, precision, recall, and F1 scores. the scores are as follows:
+
+|Model|Accuracy|Precision|Recall|F1|
+|-------|-------|--------|------|--------|
+|Baseline|42%|46%|46%|46%|
+|Neural Network: No regularization|87%|87%|87%|86%|
+|Neural Network: with Regularization|84%|84%|84%|82%|
 
 ## Conclusion
+
+Overall our best model has similar accuracy (87%) to manual classification from the radiologist found in the study by [Munir, S. Khan, Hanif, and M. Khan (2021)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7794124/) so our model could greatly help reduce the workload of radiologist. We primarily care about the false negative rate of our no tumor class and found the model to often predict meningioma incorrectly. [According to Zhang et al. (2022)](https://www.frontiersin.org/articles/10.3389/fonc.2022.886968/full) meningiomas are often benign and not as a severe as a risk as the other two classes of tumors. However, it still the risk of the missing a cancerous meningoma still remains, so that risk is still present.
 
 
 ## Recommendations
 
+This model can be improved by identifying the type of machine used to perform the MRI. That way we can account for the variability between machines and technicians.
+
+This model can be combined with anomaly detection so that the tumor can be detected as well as be able to detect weather a tumor has grown in size.
 ## Considerations
 
 [Morgan (2022)](https://www.cancer.gov/rare-brain-spine-tumor/blog/2022/neuroradiology) brings up the argument of variation in MRI scans depending on the machine used. Because we don't know what machine was used to get these MRI scans, we cant account for variations in these images. The most significant difference is the resolution of images between machines, which will affect how well our model learns details. This fact is expended on by [Zacharki et al. (2009)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2863141/) which explains brain scans are often difficult to distinguish between the tissues of the brain. So in essence the quality of the machine has varying levels of image clarity which would influence our models performance. One area to EDA area to explore is to see the average pixel density of the images or identify what machine was used for the MRI scans.
