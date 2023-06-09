@@ -16,13 +16,13 @@ import model as m
 
 _ = """
 All comments will be assigned to the underscore variable so they dont get rendered in streamlit
-as mention in this discussion form:
+as mention in this discussion fourm:
 https://discuss.streamlit.io/t/any-way-to-prevent-commented-out-code-via-triple-quotes-to-be-displayed-in-streamlit/8821/6
 
 This code takes heavy influece from a previous project.
 https://github.com/DerikVo/NN_hackathon
 
-There were many changes to the code to get it to work with this data set,
+There were many changes to the code to get it to work with this data set as well as provide additional features,
 but the general structure remains the same
 """
 
@@ -33,8 +33,14 @@ def load_model_stream():
     path = "../Models/CNN_base.h5"
     model = load_model(path)
     return model
-
-# function to preprocess an image and get a prediction from the model
+_ = """
+function to preprocess an image and get a prediction from the model
+code was copied into chatGPT3 with the prompt "how do I modify this code to covert a single image to make predictions on what class it belongs to. 
+The image and classes are in greyscale" was provided with this code. 
+According to stackoverflow this method is used for greyscaling an image.
+My interptation is by greyscaling our image we ensure it matchs the training data which gets read in as a greyscale image: 
+https://stackoverflow.com/questions/52307290/what-is-the-difference-between-images-in-p-and-l-mode-in-pil
+"""
 def get_prediction(model, image):
 	open_image = Image.open(image)
 	resized_image = open_image.resize((256, 256))
@@ -43,6 +49,7 @@ def get_prediction(model, image):
 	predicted_prob = model.predict(img)[0]
 	classes = ['glioma', 'meningioma', 'notumor', 'pituitary']
 	probabilities = dict(zip(classes, predicted_prob))
+	#referenced https://www.freecodecamp.org/news/sort-dictionary-by-value-in-python/
 	sorted_probabilities = sorted(probabilities.items(), key=lambda x: x[1], reverse=True)
 	return sorted_probabilities
 def upload_mode():
@@ -100,8 +107,11 @@ def model_Evaluation(path):
 	return data
 _ ='''
 This code utilized the streamlit documentation to implement columns
-and displaying images. In the future I want users to be able to upload their model and have it
-automatically be evaluated by the app.
+and displaying images. 
+
+In the future I want users to be able to upload their model and have it
+automatically be evaluated by the app. However, currently when I create a function to upload the model, I am unable to pass it into the model evaluation function.
+The model being passed isnt being interpreted as a h5 file.
 
 The links are as folows:
 https://docs.streamlit.io/library/api-reference/layout/st.columns
@@ -115,7 +125,7 @@ if page == 'Model Evaluation':
 	reg_path = ('../Models/CNN_regularization.h5')
 	reg_data = model_Evaluation(path)
 	st.write("CNN base Metrics:\n")
-	
+	#create a column for metric scores and display the confusion matrix for the neural network without regularization
 	col1, col2 = st.columns(2)
 	with col1:
 		for metric_name, metric_value in data.items():
@@ -126,6 +136,7 @@ if page == 'Model Evaluation':
 	st.write("")
 	st.write("")
 	st.write("\n CNN regularization Metrics:")
+	#create a column for metric scores and display the confusion matrix for the neural network with regularization
 	col3, col4 = st.columns(2)
 	with col3:
 		for metric_name, metric_value in reg_data.items():
