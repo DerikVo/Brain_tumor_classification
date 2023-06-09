@@ -29,7 +29,7 @@ For the purposes of this model, we want to limit our false negatives. We want to
 
 ## EDA
 
-For our [EDA process](../Notebooks/01_EDA.ipynb) we examined our two datasets which contained the classes 'glioma', 'meningioma', 'notumor', 'pituitary' which were separated into their own folders. The file count of the images were as follows:
+For our [EDA process](./Notebooks/01_EDA.ipynb) we examined our two datasets which contained the classes 'glioma', 'meningioma', 'notumor', 'pituitary' which were separated into their own folders. The file count of the images were as follows:
 
 |Class|Training count| Testing count|
 |------|------|------|
