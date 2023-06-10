@@ -25,6 +25,7 @@ Stake holders:
 
 ## Problem Statement:
 Because of the difficulty of manual classification of a brain tumor and the time constraints put on radiologist, building a classification model would greatly reduce the workload of a radiologist. This model will help guide the MRI process by classifying the images so the radiologist will have a reference point when evaluating an MRI scan. This model should only be used as an assistant and not for diagnosis.
+
 For the purposes of this model, we want to limit our false negatives. We want to avoid the model predicting no tumor when in reality there is a tumor. A false positive,predicting there is a tumor when there is no tumor, would simply require a follow up from a radiologist or specialized professional to confirm a diagnosis. In this case the model cares more about the precision and accuracy score of the model.
 
 ## EDA
@@ -46,13 +47,15 @@ Overall, the classes are balanced between the classes 'glioma', 'meningioma', 'n
 
 For our [modeling stage](./Notebooks/03_Neural_network.ipynb) we built an initial baseline model that takes the average pixel values of a class. This method was used as a baseline to compare our model and achieved an accuracy of 46%. Following our baseline model we built 2 convolutional neural network, one as a simple baseline and another with regularization; however, the regularization had a poorer performance compared to out model without regularization. A 3rd convolutional neural network using augmentation was attempted, but there were issues with running out of memory so that idea was scrapped.
 
-Our models were evaluated using a custom module to extract the accuracy, precision, recall, and F1 scores. the scores are as follows:
+Our models were evaluated in the [Model Evaluation notebook](../Notebooks/04_Model_evaluation.ipynb) using a custom module to extract the accuracy, precision, recall, and F1 scores. the scores are as follows:
 
 |Model|Accuracy|Precision|Recall|F1|
 |-------|-------|--------|------|--------|
 |Baseline|42%|46%|46%|46%|
 |Neural Network: No regularization|87%|87%|87%|86%|
 |Neural Network: with Regularization|84%|84%|84%|82%|
+
+When looking at additional metrics we have more insight on the different metrics on individual classifications. In this case we only want to focus only on the no tumor class in which case we want to limit our false negative, so the metric we will focus on is Precision. In this case our Neural network with no regularization does the best across all metrics. The only mis-classification for the no tumor class is meningioma in which case we see 64 false negatives.
 
 ## Conclusion
 
@@ -64,6 +67,9 @@ Overall our best model has similar accuracy (87%) to manual classification from 
 This model can be improved by identifying the type of machine used to perform the MRI. That way we can account for the variability between machines and technicians.
 
 This model can be combined with anomaly detection so that the tumor can be detected as well as be able to detect weather a tumor has grown in size.
-## Considerations
+
+In the future the streamlit app can be use to dynamically evaluate models by allowing users to upload a saved model. However at the moment that were issues with the user input field not passing the object as the a h5 model.
+
+## Limitations
 
 [Morgan (2022)](https://www.cancer.gov/rare-brain-spine-tumor/blog/2022/neuroradiology) brings up the argument of variation in MRI scans depending on the machine used. Because we don't know what machine was used to get these MRI scans, we cant account for variations in these images. The most significant difference is the resolution of images between machines, which will affect how well our model learns details. This fact is expended on by [Zacharki et al. (2009)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2863141/) which explains brain scans are often difficult to distinguish between the tissues of the brain. So in essence the quality of the machine has varying levels of image clarity which would influence our models performance. One area to EDA area to explore is to see the average pixel density of the images or identify what machine was used for the MRI scans.

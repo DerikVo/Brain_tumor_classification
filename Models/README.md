@@ -1,0 +1,1 @@
+This folder is used to store any models being trained. When you fork this project all models will be stored here. Please ensure you have the models(.h5 files) added to your git ignore to avoid any git issues. These models are often above the file limit for github.
