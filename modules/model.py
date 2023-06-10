@@ -47,6 +47,8 @@ def avg_images(class_name, dataset='Training'):
 The Code was originally developed by chat GPT 3 with the prompt: "I want to find the average pixel value of each class and then use the mean of an image to find which class it belongs to. The path to the class looks like '../Images/Training/glioma/' the classes are 'glioma', 'meningioma', 'notumor', 'pituitary'"
 
 was later prompted to adjust the code to be able to pass a parameter to the classify_images function. Took a total of 8 prompts and  3 manual adjustments.
+
+commented out the code to try to undestand what is happening so I can adjust the code as needed.
 '''
 def find_closest_class(mean_pixel_value, class_averages):
     '''
@@ -62,6 +64,7 @@ def find_closest_class(mean_pixel_value, class_averages):
     closest_distance = float('inf')
     for class_name, average in class_averages.items():
         #finds the distance between the mean pixel value and the class average
+        #https://www.educative.io/answers/what-is-the-nplinalgnorm-method-in-numpy
         distance = np.linalg.norm(mean_pixel_value - average)
         # Finds the smaller distance
         if distance < closest_distance:
@@ -76,6 +79,8 @@ def find_closest_class(mean_pixel_value, class_averages):
 The Code was originally developed by chat GPT 3 with the prompt: "How do I dynamically classify images using the folder they are in as a class. Please use the OS module"
 
 was later prompted to adjust the code to be able to pass a parameter to the find_closest_class function.
+
+commented out the code to try to undestand what is happening so I can adjust the code as needed.
 '''
 def classify_images(test_folder_path, class_paths):
     '''
@@ -121,6 +126,8 @@ def classify_images(test_folder_path, class_paths):
 '''
 This portion reuses code from prior projects. The confusion matrix used the project: https://github.com/DerikVo/DSI_project_4_plant_disease/blob/main/notebooks/02_plant_village_potato_modeling.ipynb
 which prompted ChatGPT 4 to help grab the labels information from the validation dataset and get it into a numpy array, so that we can use that to make a confusion matrix.
+
+Converting a dictionary was taken from: https://stackoverflow.com/questions/18837262/convert-python-dict-into-a-dataframe
 
 The creatation of the data frame was taken from this project: https://github.com/DerikVo/NN_hackathon/blob/main/Code/Training/pre-trained-models.ipynb
 
@@ -195,10 +202,9 @@ Converting a dictionary was taken from: https://stackoverflow.com/questions/1883
 originally tried using functions that's only found in pandas 2.0
 
 '''
-    
 def model_metrics(true_classes, predicted_classes, title):
     '''
-    Calculate accuracy, precision, recall, and F1 score.
+    Calculate accuracy, precision, recall, and F1 score and returns a dataframe.
     Also passes a title argument that titles the index for the model being used
     '''
     accuracy = accuracy_score(true_classes, predicted_classes)
