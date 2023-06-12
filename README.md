@@ -81,11 +81,13 @@ Overall our best model has similar accuracy (87%) to manual classification from 
 
 ## Recommendations
 
-This model can be improved by identifying the type of machine used to perform the MRI. That way we can account for the variability between machines and technicians.
+This model can be improved by identifying the type of machine used to perform the MRI. That way we can account for the variability between machines and technicians. We will need to talk to the data team to add additional labels.
 
-This model can be combined with anomaly detection so that the tumor can be detected as well as be able to detect weather a tumor has grown in size.
+To deal with data leakage we will need to talk to experts to identify and label only the initial image to avoid the varying types of imaging being misclassified. Ideally, we would only  utilize the first baseline image, but again we need to consult of domain experts to understand what image would cause data leakage.
 
-In the future the streamlit app can be use to dynamically evaluate models by allowing users to upload a saved model. However at the moment that were issues with the user input field not passing the object as the a h5 model.
+This model can be combined with anomaly detection so that the tumor can be detected as well as be able to detect weather a tumor has grown in size. The data science team will need to consult with other teams to see if we have the available data and with administrators to see if this is a path we want to pursue.
+
+In the future the streamlit app can be use to dynamically evaluate models by allowing users to upload a saved model. However at the moment that were issues with the user input field not passing the object as the a h5 model. This way radiologist and domain experts can correct the classifications, so the weights can be updated to be more accurate.
 
 ## Limitations
 
