@@ -8,6 +8,7 @@ Table of contents
 |[Problem_Statement](#Problem_Statement)|
 |[EDA](#EDA)|
 |[Modeling_and_Evaluations](#Modeling_and_Evaluations)|
+|[Streamlit](#Streamlit)|
 |[Conclusion](#Conclusion)|
 |[Recommendations](#Recommendations)|
 |[Limitations](#Limitations)|
@@ -73,6 +74,12 @@ Our models were evaluated in the [Model Evaluation notebook](./Notebooks/04_Mode
 |Neural Network: with Regularization|84%|84%|84%|82%|
 
 When looking at additional metrics we have more insight on the different metrics on individual classifications. In this case we only want to focus only on the no tumor class in which case we want to limit our false negative, so the metric we will focus on is Precision. In this case our Neural network with no regularization does the best across all metrics. The only mis-classification for the no tumor class is meningioma in which case we see 64 false negatives.
+
+
+## Streamlit
+
+A [streamlit app](./Streamlit/app.py) was developed to allow radiologist to upload an image to get some predictions and the probability of an image belonging to a class. A future feature is to have user input the update the class so the weights can be updated. There was also a planned feature to allow developers to upload a model stored as an h5 model and have that be evaluated. However when uploading a model it does not get stored as an h5 file. Currently the feature requires developers to assign a path to the stored model. As of now it only displays the metric scores and saved confusion matrix (image) of a model. In the future the confusion matrix will also be dynamic like the metric score, and incorporate the ability to upload a model so developers and IT can update the model being used.
+
 
 ## Conclusion
 
