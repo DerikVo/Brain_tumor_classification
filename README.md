@@ -1,7 +1,24 @@
 # Brain_tumor_classification
 This project was a part of my capstone project for General assembly. The goal was to use a neural network to classify brain tumors and have a web app to predict the probability of an image having a brain tumor.
 
+Table of contents
+|Section|
+|-------|
+|[Backgound](#Background)|
+|[Problem_Statement](#Problem_Statement)|
+|[EDA](#EDA)|
+|[Modeling_and_Evaluations](#Modeling_and_Evaluations)|
+|[Conclusion](#Conclusion)|
+|[Recommendations](#Recommendations)|
+|[Limitations](#Limitations)|
+
+
+
 ## Background:
+
+MRI or magnetic resonance imaging, is a tool used to diagnosis brain tumors. [Pejrimovsky et al. (2022)](https://www.nature.com/articles/s41597-022-01157-0) suggest that are over 150 different types of brain tumors defined by the world health organization. They suggest brain tumors account for a large fraction of potential life loss compared to tumors located on other sites. They suggest these brain tumors have a significant negative impact on an individual’s quality of life. 
+Within our dataset we only trained on 4 classes: No tumor, Meningioma, Glioma, and pituitary tumors. [Yildirim, Cengil, Eroglu, and Cinar (2023)](https://link.springer.com/article/10.1007/s42044-023-00139-8) suggest within each class of tumor there are two types benign and malignant. Which describe if a tumor is essentially harmless or cancerous. Furthermore they describe gliomas as arising from neuroglial cells, meningiomas arising from brain membranes, and pituitary tumors are on pituitary glands.
+
 
 According to [Munir, S. Khan, Hanif, and M. Khan (2021)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7794124/) found that Giloma tumors are the most common type of tumor. They found that identification of these tumors has an accuracy of 87% (N = 154), using histopathology also known as "the study of diseased cells and tissues using a microscope" [cancer.gov](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/histopathology). As a note, the radiologists reviewing the images had a minimum of five years of post fellowship experience. [Morgan (2022)](https://www.cancer.gov/rare-brain-spine-tumor/blog/2022/neuroradiology) explains the first MRI image is typically a baseline and subsequent scans are used to determine if there is a change. Morgan argues that determining the results of an MRI scan can often be an inefficient process due to spending "15 mintues or more arguing about weather something had change on the MRI". [Zacharaki et al. (2009)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2863141/) argues the difficulty of an MRI diagnoses is due to tissue often being heterogeneous and often difficult to distinguish with the human eye.
 
@@ -23,7 +40,7 @@ Stake holders:
 |MRI manufacturers|May design their MRI based on the needs of our model, or provide insights to improve our model|
 |Researchers|Can be a point of collaboration to improve model performance or provide expertise|
 
-## Problem Statement:
+## Problem_Statement:
 Because of the difficulty of manual classification of a brain tumor and the time constraints put on radiologist, building a classification model would greatly reduce the workload of a radiologist. This model will help guide the MRI process by classifying the images so the radiologist will have a reference point when evaluating an MRI scan. This model should only be used as an assistant and not for diagnosis.
 
 For the purposes of this model, we want to limit our false negatives. We want to avoid the model predicting no tumor when in reality there is a tumor. A false positive,predicting there is a tumor when there is no tumor, would simply require a follow up from a radiologist or specialized professional to confirm a diagnosis. In this case the model cares more about the precision and accuracy score of the model.
@@ -43,11 +60,11 @@ For our [EDA process](./Notebooks/01_EDA.ipynb) we examined our two datasets whi
 For our EDA process we took the average pixel value of each class.
 Overall, the classes are balanced between the classes 'glioma', 'meningioma', 'notumor', and 'pituitary' in both our training and testing datasets. Additionally when looking at the average pixel value and the contrast between those average we saw some distinct features within those classes. This indicates that there are features that our model can learn to distinguish images into classes. One interesting observation we made was brain with no tumors generally had the most details. When reflecting on our research, [Morgan (2022)](https://www.cancer.gov/rare-brain-spine-tumor/blog/2022/neuroradiology) suggested the first MRI scan is used as a baseline to determine what areas of the brain to scan. This suggest a brain with no tumor will generally have the same angle across patients which was shown in our analysis.
 
-## Modeling and Evaluations
+## Modeling_and_Evaluations
 
-For our [modeling stage](./Notebooks/03_Neural_network.ipynb) we built an initial baseline model that takes the average pixel values of a class. This method was used as a baseline to compare our model and achieved an accuracy of 46%. Following our baseline model we built 2 convolutional neural network, one as a simple baseline and another with regularization; however, the regularization had a poorer performance compared to out model without regularization. A 3rd convolutional neural network using augmentation was attempted, but there were issues with running out of memory so that idea was scrapped.
+For our [modeling stage](./Notebooks/03_Neural_network.ipynb) we built an initial [baseline model](./Notebooks/02_Baseline_Model.ipynb) that takes the average pixel values of a class. This method was used as a baseline to compare our model and achieved an accuracy of 46%. Following our baseline model we built 2 convolutional neural network, one as a simple baseline and another with regularization; however, the regularization had a poorer performance compared to out model without regularization. A 3rd convolutional neural network using augmentation was attempted, but there were issues with running out of memory so that idea was scrapped.
 
-Our models were evaluated in the [Model Evaluation notebook](../Notebooks/04_Model_evaluation.ipynb) using a custom module to extract the accuracy, precision, recall, and F1 scores. the scores are as follows:
+Our models were evaluated in the [Model Evaluation notebook](./Notebooks/04_Model_evaluation.ipynb) using a custom module to extract the accuracy, precision, recall, and F1 scores. the scores are as follows:
 
 |Model|Accuracy|Precision|Recall|F1|
 |-------|-------|--------|------|--------|
