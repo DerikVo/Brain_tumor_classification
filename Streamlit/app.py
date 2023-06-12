@@ -20,7 +20,7 @@ as mention in this discussion fourm:
 https://discuss.streamlit.io/t/any-way-to-prevent-commented-out-code-via-triple-quotes-to-be-displayed-in-streamlit/8821/6
 
 This code takes heavy influece from a previous project.
-https://github.com/DerikVo/NN_hackathon
+https://github.com/DerikVo/NN_hackathon/blob/main/Code/Helpers/streamlit/app.py
 
 There were many changes to the code to get it to work with this data set as well as provide additional features,
 but the general structure remains the same
@@ -44,6 +44,7 @@ https://stackoverflow.com/questions/52307290/what-is-the-difference-between-imag
 def get_prediction(model, image):
 	open_image = Image.open(image)
 	resized_image = open_image.resize((256, 256))
+	# got help from chat gpt 3 by copy and pasting code and asking how get predictions from a single image
 	grayscale_image = resized_image.convert('L')
 	img = np.expand_dims(grayscale_image, axis=0)
 	predicted_prob = model.predict(img)[0]
@@ -81,6 +82,8 @@ This portion of the code was taken from the moduels function py file
 this code also brows ideas from previous projects and intergrates it into a function.
 Espically the model evaluation notebook.
 '''
+
+@st.cache_resource #cache so I can show this during presentation more easily
 def model_Evaluation(path):
 	'''
 	Calculate accuracy, precision, recall, and F1 score.
@@ -117,6 +120,7 @@ The links are as folows:
 https://docs.streamlit.io/library/api-reference/layout/st.columns
 https://docs.streamlit.io/library/api-reference/media/st.image
 '''
+
 
 if page == 'Model Evaluation':
 	path = ('../Models/CNN_base.h5')
