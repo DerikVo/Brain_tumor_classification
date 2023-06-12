@@ -6,6 +6,8 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
+#increased font size found on this thread: https://stackoverflow.com/questions/3899980/how-to-change-the-font-size-on-a-matplotlib-plot
+plt.rcParams.update({'font.size': 22})
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
 '''
@@ -178,7 +180,7 @@ def plot_confusion_matrix(confusion_matrix, class_paths, title):
     The tile will be a prefix to {title} confusion matrix
     '''
     #sets the figure size
-    plt.figure(figsize=(10,10))
+    plt.figure(figsize=(12,12))
     #Plots the confusion matrix and assigns the class names on the axis ticks
     sns.heatmap(confusion_matrix, annot=True, cmap='Blues', fmt='g',
     xticklabels=list(class_paths.keys()), yticklabels=list(class_paths.keys()))
