@@ -203,9 +203,11 @@ Converting a dictionary was taken from: https://stackoverflow.com/questions/1883
 
 originally tried using functions that's only found in pandas 2.0
 
+This version is used for the streamlit app
 '''
 def model_metrics(true_classes, predicted_classes, title):
     '''
+    
     Calculate accuracy, precision, recall, and F1 score and returns a dataframe.
     Also passes a title argument that titles the index for the model being used
     '''
